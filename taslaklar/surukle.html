@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="tr"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · İki adres — prototip G</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+body{background:#0c0c0c;color:var(--paper)}
+header{color:#fff}
+.sahne{position:relative;height:100svh;overflow:hidden;cursor:ew-resize;touch-action:pan-y;user-select:none}
+.kat{position:absolute;inset:0}
+.k1{clip-path:inset(0 0 0 var(--x,50%))}
+.cizgi{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 30px rgba(255,255,255,.6);z-index:3}
+.tutamac{position:absolute;top:50%;left:var(--x,50%);transform:translate(-50%,-50%);z-index:4;width:84px;height:84px;border-radius:50%;background:rgba(245,242,236,.95);color:var(--ink);display:grid;place-items:center;font:600 13px var(--mono);letter-spacing:.06em;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:transform .4s var(--ease)}
+.sahne:active .tutamac{transform:translate(-50%,-50%) scale(.9)}
+.etk{position:absolute;z-index:3;top:110px;padding:8px 12px;background:rgba(20,20,20,.55);backdrop-filter:blur(8px)}
+.etk.l{left:clamp(16px,4vw,48px)}.etk.r{right:clamp(16px,4vw,48px)}
+.alt{position:absolute;z-index:3;left:clamp(16px,5vw,72px);right:clamp(16px,5vw,72px);bottom:clamp(28px,6svh,64px);display:flex;justify-content:space-between;align-items:end;gap:20px;pointer-events:none}
+.alt a{pointer-events:auto}
+.alt h1{font-size:clamp(40px,6vw,96px);line-height:.92;letter-spacing:-.045em;margin:0;font-weight:650;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+.ipucu{position:absolute;z-index:4;left:50%;top:calc(50% + 64px);transform:translateX(-50%);transition:opacity .5s}
+</style></head><body>
+<header><div class="logo"><b>STAND ATELIER</b><span class="mono">Flexa modüler kabin</span></div><a class="btn btn-a" href="#">Kabinini tasarla</a></header>
+<main>
+<section class="sahne" id="sahne">
+  <div class="kat"><video class="media" src="v/avm.mp4" poster="v/avm.jpg" muted playsinline loop autoplay></video></div>
+  <div class="kat k1"><video class="media" src="v/bogaz.mp4" poster="v/bogaz.jpg" muted playsinline loop autoplay></video></div>
+  <span class="cizgi"></span><span class="tutamac">↔</span>
+  <span class="etk l mono">Mart · AVM atriumu</span><span class="etk r mono">Ağustos · Boğaz kıyısı</span>
+  <span class="ipucu mono" id="ipucu">Sürükle</span>
+  <div class="alt"><h1>Aynı kabin.<br>İki adres.</h1><a class="btn btn-a" href="#">Kabinini tasarla</a></div>
+</section>
+<section class="sonra"><span class="mono">Prototip G · İki adres</span><h2>Ziyaretçi dünyayı kendi eliyle değiştirir.</h2><p>Ekranın ortasındaki çizgiyi sürükleyince kabinin bir yarısı AVM'de, öbür yarısı Boğaz kıyısında kalır; ikisi de canlı oynar. Fare durduğunda çizgi hafifçe kendi kendine salınır. Mobilde parmakla sürüklenir. Etkileşimli, akılda kalan bir an; diğer kurgulardan biriyle birlikte de kullanılabilir.</p></section>
+</main>
+<script>
+(() => {
+  const s = document.getElementById('sahne'), ip = document.getElementById('ipucu');
+  let hedef = 50, x = 50, dokundu = false, basili = false;
+  const ayarla = e => { const r = s.getBoundingClientRect(); hedef = Math.min(100, Math.max(0, (e.clientX - r.left) / r.width * 100)); dokundu = true; ip.style.opacity = 0; };
+  s.addEventListener('pointerdown', e => { basili = true; s.setPointerCapture(e.pointerId); ayarla(e); });
+  s.addEventListener('pointermove', e => { if (basili || e.pointerType === 'mouse') ayarla(e); });
+  s.addEventListener('pointerup', () => basili = false);
+  (function loop(ts) {
+    if (!dokundu) hedef = 50 + Math.sin(ts / 1400) * 9;   // ilk anda kendi kendine salınır
+    x += (hedef - x) * .12; s.style.setProperty('--x', x + '%'); requestAnimationFrame(loop);
+  })(0);
+})();
+</script></body></html>

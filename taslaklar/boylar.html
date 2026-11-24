@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="tr"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · Üç boy — 4 alternatif</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+:root{--zemin:#ECEAE6}
+body{background:var(--zemin);color:var(--ink)}
+.etiket{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:14px clamp(16px,4vw,48px);background:rgba(20,20,20,.92);color:var(--paper)}
+.etiket b{font-size:20px;letter-spacing:-.02em}
+.bolum{padding:14svh clamp(16px,5vw,72px);border-bottom:1px solid rgba(20,20,20,.1)}
+h2.b{font-size:clamp(40px,5.4vw,84px);letter-spacing:-.05em;line-height:.95;margin:0 0 12px;font-weight:700;text-align:center}
+p.alt{color:#666;font-size:20px;margin:0 0 44px;text-align:center}
+.pill{display:inline-flex;background:rgba(20,20,20,.07);border-radius:999px;padding:5px;gap:4px}
+.pill button{border:0;background:transparent;font:600 16px var(--head);padding:12px 28px;border-radius:999px;cursor:pointer;color:#555;transition:background .35s,color .35s,box-shadow .35s}
+.pill button.on{background:#fff;color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.orta{display:flex;justify-content:center}
+.sayi{font-variant-numeric:tabular-nums}
+
+/* A · Büyüyen */
+.a-sahne{position:relative;height:min(46vw,520px);max-width:1200px;margin:40px auto 0}
+.a-kabin{position:absolute;left:50%;bottom:8%;height:62%;transform:translateX(-50%);transition:width .9s var(--ease)}
+.a-kabin img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;opacity:0;transition:opacity .5s}
+.a-kabin img.on{opacity:1}
+.a-olcu{position:absolute;left:0;right:0;top:-46px;display:flex;align-items:center;gap:12px}
+.a-olcu i{flex:1;height:1px;background:var(--ink);position:relative}
+.a-olcu i::before,.a-olcu i::after{content:"";position:absolute;top:-6px;width:1px;height:13px;background:var(--ink)}
+.a-olcu i::before{left:0}.a-olcu i:last-child::after{right:0}.a-olcu i:first-child::after{display:none}.a-olcu i:last-child::before{display:none}
+.a-olcu span{font:600 22px var(--head);letter-spacing:-.02em}
+.insan{position:absolute;bottom:8%;width:auto;height:42%;fill:#9a968e}
+.a-insan{left:calc(50% - var(--yarim) - 70px);transition:left .9s var(--ease)}
+.a-zemin{position:absolute;left:8%;right:8%;bottom:8%;height:1px;background:rgba(20,20,20,.18)}
+.ozellik{display:grid;grid-template-columns:repeat(3,1fr);max-width:900px;margin:40px auto 0;text-align:center}
+.ozellik b{display:block;font-size:clamp(34px,3.6vw,56px);letter-spacing:-.04em;font-weight:650}
+.ozellik span{color:#777;font-size:15px}
+
+/* B · Aynı zeminde */
+.b-sahne{position:relative;max-width:1300px;margin:30px auto 0;display:flex;align-items:flex-end;justify-content:center;gap:3.2%;padding-bottom:10px;border-bottom:1px solid rgba(20,20,20,.2)}
+.b-kabin{position:relative;cursor:pointer;transition:opacity .5s,filter .5s,transform .6s var(--ease)}
+.b-kabin img{display:block;width:100%;height:auto}
+.b-sahne.secim .b-kabin{opacity:.28;filter:grayscale(1)}
+.b-sahne.secim .b-kabin.on{opacity:1;filter:none;transform:translateY(-8px)}
+.b-kabin figcaption{text-align:center;margin-top:16px}
+.b-kabin figcaption b{display:block;font-size:30px;letter-spacing:-.03em}
+.b-kabin figcaption span{color:#777;font-size:14px}
+.b-tablo{max-width:1000px;margin:56px auto 0;display:grid;grid-template-columns:1.2fr repeat(3,1fr);font-size:17px}
+.b-tablo div{padding:16px 10px;border-bottom:1px solid rgba(20,20,20,.1)}
+.b-tablo .bas{font-weight:600}
+.b-tablo .on{background:#fff}
+
+/* C · Kaydırınca uzar */
+.c-yer{position:relative;height:300svh}
+.c-yapis{position:sticky;top:48px;height:calc(100svh - 48px);display:grid;place-items:center;overflow:hidden}
+.c-sahne{position:relative;width:min(1200px,92vw);height:min(56vw,640px)}
+.c-kabin{position:absolute;left:50%;bottom:10%;height:44%;transform:translateX(-50%)}
+.c-kabin img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}
+.c-buyuk{position:absolute;left:0;right:0;top:4%;text-align:center}
+.c-buyuk b{font-size:clamp(90px,14vw,220px);letter-spacing:-.07em;font-weight:700;line-height:.8;display:block}
+.c-buyuk span{color:#777;font-size:18px}
+.c-adim{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:10px}
+.c-adim i{width:56px;height:3px;background:rgba(20,20,20,.15);position:relative;overflow:hidden}
+.c-adim i b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(var(--p,0))}
+
+/* D · Karşılaştır kartları */
+.d-izgara{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1300px;margin:0 auto}
+.d-kart{background:#fff;border-radius:22px;padding:34px 30px 30px;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s}
+.d-kart:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.08)}
+.d-gorsel{height:150px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:26px}
+.d-gorsel img{height:100%;width:auto;max-width:100%;object-fit:contain}
+.d-kart h3{font-size:44px;letter-spacing:-.05em;margin:0;font-weight:700}
+.d-kart .ad{color:#777;margin:4px 0 20px}
+.d-kart ul{list-style:none;padding:0;margin:0 0 26px;flex:1}
+.d-kart li{padding:12px 0;border-top:1px solid rgba(20,20,20,.08);display:flex;justify-content:space-between;font-size:16px}
+.d-kart li span{color:#777}
+.d-kart .btn{justify-content:center;border-radius:999px}
+.d-kart.one{outline:2px solid var(--ink)}
+.rozet{align-self:flex-start;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--accent);padding:5px 9px;border-radius:999px;margin-bottom:14px}
+@media (max-width:860px){.d-izgara{grid-template-columns:1fr}.b-tablo{font-size:14px}}
+</style></head><body>
+
+<!-- ============ A ============ -->
+<div class="etiket"><b>A · Büyüyen kabin</b><span class="mono">Seçince tek kabin uzar, ölçü çizgisi ve rakamlar akar</span></div>
+<section class="bolum">
+  <h2 class="b">Üç boy. Tek sistem.</h2>
+  <p class="alt">Aynı profil, aynı cam, aynı kurulum. İhtiyacınız kadar uzun.</p>
+  <div class="orta"><div class="pill" id="a-pill"><button>235</button><button class="on">482</button><button>616</button></div></div>
+  <div class="a-sahne" id="a-sahne">
+    <div class="a-zemin"></div>
+    <svg class="insan a-insan" viewBox="0 0 40 175" aria-hidden="true"><circle cx="20" cy="12" r="11"/><path d="M8 30h24l4 62-8 2-2 79h-8l-2-58-2 58H6l-2-79-8-2z" transform="translate(0)"/></svg>
+    <div class="a-kabin" id="a-kabin">
+      <div class="a-olcu"><i></i><span><span class="sayi" id="a-uz">482</span> cm</span><i></i></div>
+      <img src="urun/boy-235.webp" alt="FLEXA 235"><img src="urun/boy-482.webp" class="on" alt="FLEXA 482"><img src="urun/boy-616.webp" alt="FLEXA 616">
+    </div>
+  </div>
+  <div class="ozellik"><div><b class="sayi" id="a-alan">11,3</b><span>taban alanı, m²</span></div><div><b>235</b><span>en, cm</span></div><div><b>255</b><span>yükseklik, cm</span></div></div>
+</section>
+
+<!-- ============ B ============ -->
+<div class="etiket"><b>B · Aynı zeminde, gerçek ölçekte</b><span class="mono">Üçü yan yana; seçilen öne çıkar, altta karşılaştırma tablosu</span></div>
+<section class="bolum">
+  <h2 class="b">Üç boy. Tek sistem.</h2>
+  <p class="alt">Aynı ölçekte, yan yana. Birine dokunun.</p>
+  <div class="b-sahne secim" id="b-sahne">
+    <figure class="b-kabin" style="width:19%"><img src="urun/boy-235.webp" alt="FLEXA 235"><figcaption><b>235</b><span>Kiosk · ikram · bilet</span></figcaption></figure>
+    <figure class="b-kabin on" style="width:30%"><img src="urun/boy-482.webp" alt="FLEXA 482"><figcaption><b>482</b><span>Pop-up · showroom · market</span></figcaption></figure>
+    <figure class="b-kabin" style="width:37%"><img src="urun/boy-616.webp" alt="FLEXA 616"><figcaption><b>616</b><span>Satış ofisi · lounge · stand</span></figcaption></figure>
+  </div>
+  <div class="b-tablo" id="b-tablo">
+    <div class="bas"></div><div class="bas">235</div><div class="bas on">482</div><div class="bas">616</div>
+    <div>Uzunluk</div><div>235 cm</div><div class="on">482 cm</div><div>616 cm</div>
+    <div>En × yükseklik</div><div>235 × 255 cm</div><div class="on">235 × 255 cm</div><div>235 × 255 cm</div>
+    <div>Taban alanı</div><div>~5,5 m²</div><div class="on">~11,3 m²</div><div>~14,5 m²</div>  </div>
+</section>
+
+<!-- ============ C ============ -->
+<div class="etiket"><b>C · Kaydırınca uzar</b><span class="mono">Sticky sahne; kaydırdıkça 235 → 482 → 616 (gerçek sürümde 4K uzama render'ı)</span></div>
+<section class="c-yer" id="c-yer"><div class="c-yapis">
+  <div class="c-sahne">
+    <div class="c-buyuk"><b class="sayi" id="c-no">235</b><span>cm · FLEXA</span></div>
+    <div class="c-kabin" id="c-kabin"><img src="urun/boy-235.webp" alt="" id="c-img"></div>
+    <div class="c-adim"><i><b id="c-p1"></b></i><i><b id="c-p2"></b></i></div>
+  </div>
+</div></section>
+
+<!-- ============ D ============ -->
+<div class="etiket"><b>D · Karşılaştır kartları</b><span class="mono">Apple "modelleri karşılaştır" kalıbı; her boy kendi CTA'sıyla</span></div>
+<section class="bolum">
+  <h2 class="b">Hangi FLEXA size uygun?</h2>
+  <p class="alt">Aynı sistem, üç uzunluk. Kullanımınıza göre seçin.</p>
+  <div class="d-izgara">
+    <article class="d-kart"><div class="d-gorsel"><img src="urun/boy-235.webp" alt="" style="height:100%"></div><h3>235</h3><p class="ad">Kompakt. Tek kişilik servis.</p>
+      <ul><li><span>Uzunluk</span>235 cm</li><li><span>Taban alanı</span>~5,5 m²</li><li><span>İdeal</span>Kiosk, ikram, bilet</li></ul><a class="btn" href="#">235'i tasarla</a></article>
+    <article class="d-kart one"><span class="rozet">Dengeli seçim</span><div class="d-gorsel"><img src="urun/boy-482.webp" alt=""></div><h3>482</h3><p class="ad">Dengeli. Mağaza gibi.</p>
+      <ul><li><span>Uzunluk</span>482 cm</li><li><span>Taban alanı</span>~11,3 m²</li><li><span>İdeal</span>Pop-up, showroom, market</li></ul><a class="btn btn-a" href="#">482'yi tasarla</a></article>
+    <article class="d-kart"><div class="d-gorsel"><img src="urun/boy-616.webp" alt=""></div><h3>616</h3><p class="ad">Geniş. Ofis ve lounge.</p>
+      <ul><li><span>Uzunluk</span>616 cm</li><li><span>Taban alanı</span>~14,5 m²</li><li><span>İdeal</span>Satış ofisi, VIP, stand</li></ul><a class="btn" href="#">616'yı tasarla</a></article>
+  </div>
+</section>
+
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const boylar = [235, 482, 616], alan = ['5,5', '11,3', '14,5'];
+  // genişlik oranları (gerçek ölçek): uzunluk / 616
+  const oran = b => b / 616;
+  // ---- A ----
+  const aS = document.getElementById('a-sahne'), aK = document.getElementById('a-kabin'), aImg = [...aK.querySelectorAll('img')], aB = [...document.querySelectorAll('#a-pill button')];
+  const aUz = document.getElementById('a-uz'), aAlan = document.getElementById('a-alan');
+  let aSayi = 482;
+  function aSec(i) {
+    aB.forEach((b, j) => b.classList.toggle('on', j === i)); aImg.forEach((im, j) => im.classList.toggle('on', j === i));
+    const w = 74 * oran(boylar[i]); aK.style.width = w + '%'; aS.style.setProperty('--yarim', (w / 2) + '%');
+    aAlan.textContent = alan[i];
+    const bas = aSayi, son = boylar[i], t0 = performance.now();
+    (function say(t) { const k = clamp((t - t0) / 900); const e = 1 - Math.pow(1 - k, 3); aUz.textContent = Math.round(bas + (son - bas) * e); if (k < 1) requestAnimationFrame(say); else aSayi = son; })(t0);
+  }
+  aB.forEach((b, i) => b.onclick = () => aSec(i)); aSec(1);
+  // ---- B ----
+  const bK = [...document.querySelectorAll('.b-kabin')], bT = [...document.querySelectorAll('#b-tablo div')];
+  bK.forEach((k, i) => k.onclick = () => { bK.forEach((x, j) => x.classList.toggle('on', j === i)); bT.forEach((c, n) => c.classList.toggle('on', n % 4 === i + 1)); });
+  // ---- C ----
+  const cY = document.getElementById('c-yer'), cK = document.getElementById('c-kabin'), cImg = document.getElementById('c-img'), cNo = document.getElementById('c-no');
+  const p1 = document.getElementById('c-p1'), p2 = document.getElementById('c-p2');
+  let s = 0, akt = -1;
+  (function loop() {
+    const r = cY.getBoundingClientRect(), p = clamp(-r.top / (r.height - innerHeight)); s += (p - s) * .1;
+    const u = s < .5 ? 235 + (482 - 235) * clamp(s / .4) : 482 + (616 - 482) * clamp((s - .55) / .4);
+    cK.style.width = (74 * u / 616) + '%'; cNo.textContent = Math.round(u);
+    const i = u < 360 ? 0 : u < 550 ? 1 : 2; if (i !== akt) { cImg.src = `urun/boy-${boylar[i]}.webp`; akt = i; }
+    p1.style.setProperty('--p', clamp(s / .4)); p2.style.setProperty('--p', clamp((s - .55) / .4));
+    requestAnimationFrame(loop);
+  })();
+})();
+</script></body></html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="tr"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · Sıvı geçiş — prototip F</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+body{background:#0c0c0c;color:var(--paper)}
+header{color:#fff}
+.dunya{position:relative;height:400svh}
+.sahne{position:sticky;top:0;height:100svh;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+video{position:absolute;width:2px;height:2px;opacity:0;pointer-events:none}
+.yazi{position:absolute;left:clamp(16px,5vw,72px);bottom:clamp(28px,7svh,72px);right:clamp(16px,5vw,72px);display:flex;justify-content:space-between;align-items:end;pointer-events:none}
+.yazi a{pointer-events:auto}
+.blok{position:relative;height:clamp(150px,24svh,240px);flex:1}
+.blok > div{position:absolute;left:0;bottom:0;transition:opacity .5s var(--ease),transform .9s var(--ease),filter .6s}
+.blok > div.gizli{opacity:0;transform:translateY(20px);filter:blur(6px)}
+h1,h2{font-size:clamp(42px,6.4vw,104px);line-height:.9;letter-spacing:-.045em;margin:10px 0 0;font-weight:650;text-shadow:0 2px 30px rgba(0,0,0,.35)}
+.sayac{font-variant-numeric:tabular-nums;text-align:right}
+.sayac b{display:block;font-size:64px;letter-spacing:-.05em;line-height:.9;font-weight:600}
+</style></head><body>
+<header><div class="logo"><b>STAND ATELIER</b><span class="mono">Flexa modüler kabin</span></div><a class="btn btn-a" href="#">Kabinini tasarla</a></header>
+<main>
+<section class="dunya" id="dunya"><div class="sahne">
+  <canvas id="gl"></canvas>
+  <video id="v0" src="v/avm.mp4" muted playsinline loop autoplay crossorigin="anonymous"></video>
+  <video id="v1" src="v/bogaz.mp4" muted playsinline loop autoplay crossorigin="anonymous"></video>
+  <div class="yazi">
+    <div class="blok">
+      <div id="t0"><span class="mono">01 · Mart · AVM atriumu · FLEXA 482</span><h1>Bu hafta burada.</h1></div>
+      <div id="t1" class="gizli"><span class="mono">02 · Ağustos · Boğaz kıyısı · FLEXA 482</span><h2>Gelecek ay<br>başka yerde.</h2></div>
+    </div>
+    <div class="sayac mono"><b id="no">01</b>/ 06</div>
+  </div>
+</div></section>
+<section class="sonra"><span class="mono">Prototip F · Sıvı geçiş (WebGL)</span><h2>Dünya sıvı gibi akarak değişir; kabin yerinde kalır.</h2><p>İki video da GPU'da canlı oynar. Kaydırdıkça bir gölgelendirici (shader) yeni sahneyi organik bir dalga cephesiyle içeri akıtır: kenarlarda hafif kırılma ve renk ayrışması olur. Fare hareketi sahneyi çok hafif kaydırır. Ödül sitelerindeki "imza geçiş" türü; Three.js gerekmeden, saf WebGL.</p></section>
+</main>
+<script>
+(() => {
+  const cv = document.getElementById('gl'), gl = cv.getContext('webgl', { antialias: false, premultipliedAlpha: false });
+  const v = [document.getElementById('v0'), document.getElementById('v1')];
+  const t = [document.getElementById('t0'), document.getElementById('t1')], no = document.getElementById('no');
+  const vs = `attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;uv.y=1.-uv.y;gl_Position=vec4(p,0,1);}`;
+  const fs = `precision highp float;varying vec2 uv;uniform sampler2D a,b;uniform float k,time,asp;uniform vec2 fare;
+  // basit değer gürültüsü
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+  float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*n(p);p*=2.02;a*=.5;}return s;}
+  vec2 kapla(vec2 u){ // object-fit:cover, video 16:9, odak 50% 49%
+    float va=16./9.; vec2 s=asp>va?vec2(1.,va/asp):vec2(asp/va,1.); return (u-vec2(.5,.49))*s+vec2(.5,.49);}
+  void main(){
+    vec2 u=uv+fare*.006;
+    // kabin merkezinden dışa akan dalga cephesi + organik gürültü
+    vec2 c=vec2(.5,.49); float d=length((uv-c)*vec2(asp,1.))/asp;
+    float g=fbm(uv*3.+time*.08)*.55;
+    float cephe=1.08-k*1.45;            // k=0: hiç, k=1: tamamı
+    float m=smoothstep(cephe-.02,cephe+.10,1.-(d+g*.6));
+    float kenar=smoothstep(.0,.5,m)*smoothstep(1.,.5,m);
+    vec2 kir=normalize(uv-c+1e-4)*kenar*.035;
+    vec2 ua=kapla(u+kir*(1.-m)), ub=kapla(u-kir*m*.6);
+    vec4 A=texture2D(a,ua), B;
+    B.r=texture2D(b,ub+kir*.15).r; B.g=texture2D(b,ub).g; B.b=texture2D(b,ub-kir*.15).b; B.a=1.;
+    vec4 col=mix(A,B,m);
+    col.rgb+=kenar*vec3(1.,.93,.8)*.18; // kenarda sıcak ışık
+    gl_FragColor=col;}`;
+  function sh(tp, src) { const s = gl.createShader(tp); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; }
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr); gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const tex = [0, 1].map(i => { const tx = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, tx);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([12,12,12,255])); return tx; });
+  gl.uniform1i(gl.getUniformLocation(pr, 'a'), 0); gl.uniform1i(gl.getUniformLocation(pr, 'b'), 1);
+  const U = n => gl.getUniformLocation(pr, n), uk = U('k'), ut = U('time'), ua = U('asp'), uf = U('fare');
+  function boyut() { const r = Math.min(devicePixelRatio || 1, 2); cv.width = innerWidth * r; cv.height = innerHeight * r; gl.viewport(0, 0, cv.width, cv.height); gl.uniform1f(ua, innerWidth / innerHeight); }
+  addEventListener('resize', boyut); boyut();
+  let fx = 0, fy = 0, hx = 0, hy = 0; addEventListener('pointermove', e => { hx = e.clientX / innerWidth - .5; hy = e.clientY / innerHeight - .5; });
+  const dunya = document.getElementById('dunya'), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  let s = 0, akt = 0;
+  function kare(ts) {
+    const r = dunya.getBoundingClientRect(), p = clamp(-r.top / (r.height - innerHeight)); s += (p - s) * .08;
+    const k = clamp((s - .25) / .5);
+    v.forEach((vid, i) => { if (vid.readyState >= 2) { gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, tex[i]); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, vid); } });
+    fx += (hx - fx) * .05; fy += (hy - fy) * .05;
+    gl.uniform1f(uk, k); gl.uniform1f(ut, ts / 1000); gl.uniform2f(uf, fx, fy);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    const a = k < .5 ? 0 : 1; if (a !== akt) { t[akt].classList.add('gizli'); t[a].classList.remove('gizli'); no.textContent = a ? '02' : '01'; akt = a; }
+    requestAnimationFrame(kare);
+  }
+  requestAnimationFrame(kare);
+})();
+</script></body></html>

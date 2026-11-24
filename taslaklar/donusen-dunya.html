@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · Bir kabin, bir yıl — prototip 4</title>
+<link rel="preload" as="image" href="v/avm.jpg" fetchpriority="high">
+<style>
+@font-face{font-family:'Inter Tight';font-weight:400 700;font-display:swap;src:url(fonts/InterTight-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+2000-206F}
+@font-face{font-family:'Inter Tight';font-weight:400 700;font-display:swap;src:url(fonts/InterTight-var-tr.woff2) format('woff2');unicode-range:U+011E-011F,U+0130,U+015E-015F}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;font-display:swap;src:url(fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+2000-206F}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;font-display:swap;src:url(fonts/IBMPlexMono-400-tr.woff2) format('woff2');unicode-range:U+011E-011F,U+0130,U+015E-015F}
+:root{--ink:#141414;--paper:#F5F2EC;--accent:#F2B300;--head:'Inter Tight',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--head);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid currentColor;background:rgba(20,20,20,.22);backdrop-filter:blur(8px);transition:background .3s,color .3s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn-a{background:var(--accent);color:var(--ink);border-color:var(--accent);backdrop-filter:none}
+
+header{position:fixed;inset:0 0 auto;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(16px,4vw,48px);background:linear-gradient(rgba(10,10,10,.55),transparent)}
+.logo b{display:block;font-size:18px;letter-spacing:.14em}
+.logo span{opacity:.75}
+header nav{display:flex;gap:12px}
+@media (max-width:700px){header nav .btn:not(.btn-a){display:none}}
+
+/* ---- kaydırma hikâyesi ---- */
+.dunya{position:relative;height:340svh}
+.sahne{position:sticky;top:0;height:100svh;overflow:hidden;background:#0c0c0c}
+.sahne video,.sahne canvas,.sahne img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 49%}
+.sahne canvas{opacity:0}
+.sahne video{opacity:0}
+.sahne::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(90deg,rgba(8,8,8,.62) 0%,rgba(8,8,8,.2) 32%,transparent 52%),linear-gradient(0deg,rgba(8,8,8,.5),transparent 30%)}
+
+.katman{position:absolute;inset:0;z-index:4;pointer-events:none}
+.katman a{pointer-events:auto}
+.metin{position:absolute;left:clamp(16px,5vw,72px);bottom:clamp(88px,12svh,140px);max-width:min(620px,88vw)}
+.metin .satir{display:block;overflow:hidden}
+.metin .satir > *{display:block;transform:translateY(110%);opacity:0;transition:transform 1s var(--ease),opacity .7s var(--ease)}
+.metin.acik .satir > *{transform:none;opacity:1}
+.metin.acik .satir:nth-child(2) > *{transition-delay:.07s}
+.metin.acik .satir:nth-child(3) > *{transition-delay:.14s}
+.metin.acik .satir:nth-child(4) > *{transition-delay:.21s}
+.metin.acik .satir:nth-child(5) > *{transition-delay:.28s}
+.metin:not(.acik) .satir > *{transition-duration:.45s,.35s;transition-delay:0s}
+h1,h2{font-size:clamp(42px,6.2vw,92px);line-height:.95;letter-spacing:-.035em;margin:12px 0 18px;font-weight:650}
+.metin p{font-size:clamp(16px,1.3vw,19px);line-height:1.5;max-width:44ch;opacity:.92;margin:0 0 22px}
+.eylem{display:flex;gap:12px;flex-wrap:wrap}
+.etiket{display:inline-flex;gap:10px;align-items:center}
+.etiket i{display:inline-block;width:28px;height:1px;background:currentColor;opacity:.6}
+.model{display:inline-block;padding:6px 10px;border:1px solid rgba(245,242,236,.45);margin-bottom:20px}
+
+.rota{position:absolute;right:clamp(16px,4vw,48px);top:50%;transform:translateY(-50%);margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px;align-items:flex-end}
+.rota li{display:flex;align-items:center;gap:12px;opacity:.42;transition:opacity .5s}
+.rota li.aktif{opacity:1}
+.rota .cizgi{width:56px;height:2px;background:rgba(245,242,236,.3);position:relative;overflow:hidden}
+.rota .cizgi b{position:absolute;inset:0;background:var(--accent);transform-origin:left;transform:scaleX(var(--p,0))}
+@media (max-width:900px){.rota{top:84px;right:16px;transform:none;flex-direction:row;gap:6px}.rota li span:first-child{display:none}.rota .cizgi{width:36px}}
+
+.kaydir{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;transition:opacity .4s}
+.kaydir i{display:block;width:1px;height:34px;background:currentColor;animation:ip 1.8s ease-in-out infinite;transform-origin:top}
+@keyframes ip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+.zaman{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(245,242,236,.14)}
+.zaman b{display:block;height:100%;background:var(--accent);transform-origin:left;transform:scaleX(var(--p,0))}
+
+.sonra{position:relative;background:var(--paper);color:var(--ink);padding:clamp(96px,12vw,160px) clamp(16px,5vw,72px)}
+.sonra h2{font-size:clamp(32px,4vw,56px);max-width:18ch;line-height:1.02}
+.sonra p{max-width:62ch;font-size:18px;line-height:1.55;color:#3A3835}
+.not{margin-top:32px;padding:18px 20px;border:1.5px dashed #3A3835;max-width:72ch;font-size:15px;line-height:1.55}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><b>STAND ATELIER</b><span class="mono">Flexa modüler kabin</span></div>
+  <nav><a class="btn" href="#">Teklif al</a><a class="btn btn-a" href="#">Kabinini tasarla</a></nav>
+</header>
+
+<main>
+  <section class="dunya" id="dunya" aria-label="Bir kabin, bir yıl">
+    <div class="sahne" id="sahne">
+      <img src="v/avm.jpg" alt="AVM atriumunda FLEXA 482 marka deneyim alanı." id="poster">
+      <video id="d0" src="v/avm.mp4" muted playsinline loop preload="auto" aria-hidden="true"></video>
+      <video id="d1" src="v/bogaz.mp4" muted playsinline loop preload="auto" aria-hidden="true"></video>
+      <canvas id="tuval" aria-hidden="true"></canvas>
+
+      <div class="katman">
+        <div class="metin acik" id="m0">
+          <span class="satir"><span class="mono etiket">01 <i></i> Mart · AVM atriumu</span></span>
+          <span class="satir"><h1>Bu hafta burada.</h1></span>
+          <span class="satir"><p>Mağaza açmadan önce, mağaza gibi. Markanız atriumda, ürünleriniz elde, ekibiniz içeride.</p></span>
+          <span class="satir"><span class="model mono">FLEXA 482 · marka deneyim alanı</span></span>
+          <span class="satir"><span class="eylem"><a class="btn btn-a" href="#">Kabinini tasarla</a><a class="btn" href="#">Teklif al</a></span></span>
+        </div>
+        <div class="metin" id="m1">
+          <span class="satir"><span class="mono etiket">02 <i></i> Ağustos · Boğaz kıyısı</span></span>
+          <span class="satir"><h2>Gelecek ay<br>başka yerde.</h2></span>
+          <span class="satir"><p>Aynı kabin sökülür, yeni giydirmesiyle sahil yolunda bir saat butiği olarak açılır.</p></span>
+          <span class="satir"><span class="model mono">FLEXA 482 · butik</span></span>
+          <span class="satir"><span class="eylem"><a class="btn btn-a" href="#">Bu kabini tasarla</a></span></span>
+        </div>
+        <ol class="rota" id="rota" aria-label="Rota">
+          <li class="aktif"><span class="mono">Mart · AVM</span><span class="cizgi"><b></b></span></li>
+          <li><span class="mono">Ağustos · Sahil</span><span class="cizgi"><b></b></span></li>
+        </ol>
+        <div class="kaydir mono" id="kaydir">Kaydır<i></i></div>
+        <div class="zaman"><b id="zb"></b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sonra">
+    <span class="mono">Prototip notu · sürüm 4</span>
+    <h2>Kaydırdıkça dünya değişir.</h2>
+    <p>Durakta 4K döngü oynar: insanlar yürür, vapur geçer. Aşağı kaydırdıkça geçiş kare kare ilerler, yukarı kaydırınca geri sarar. Geçiş 63 karelik 2560 px dizi (11,8 MB), dar ekranda 1280 px (4,5 MB).</p>
+    <div class="not">Taslak metinler. Sitede: videolar sayfa açıldıktan sonra iner, kareler ekrana yaklaşınca yüklenir; mobilde döngü yerine poster.</div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const dunya = document.getElementById('dunya');
+  const d = [document.getElementById('d0'), document.getElementById('d1')];
+  const tuval = document.getElementById('tuval'), ctx = tuval.getContext('2d');
+  const m = [document.getElementById('m0'), document.getElementById('m1')];
+  const rota = [...document.querySelectorAll('#rota li')];
+  const zb = document.getElementById('zb'), kaydir = document.getElementById('kaydir');
+
+  // --- kare dizisi ---
+  const N = 63, kat = innerWidth * Math.min(devicePixelRatio || 1, 2) > 1600 ? '2560' : '1280';
+  const kareler = Array.from({ length: N }, (_, i) => { const im = new Image(); im.decoding = 'async'; im.src = `v/gecis-kare/${kat}/${String(i + 1).padStart(3, '0')}.webp`; return im; });
+  let cizilen = -1;
+  function boyut() { const r = Math.min(devicePixelRatio || 1, 2); tuval.width = innerWidth * r; tuval.height = innerHeight * r; cizilen = -1; }
+  addEventListener('resize', boyut); boyut();
+  function ciz(i) {
+    let im = kareler[i];
+    if (!(im.complete && im.naturalWidth)) { for (let k = 1; k < N; k++) { const a = kareler[i - k] || kareler[i + k]; if (a && a.complete && a.naturalWidth) { im = a; break; } } }
+    if (!(im.complete && im.naturalWidth)) return;
+    // object-fit: cover + object-position 50% 49%
+    const s = Math.max(tuval.width / im.naturalWidth, tuval.height / im.naturalHeight);
+    const w = im.naturalWidth * s, h = im.naturalHeight * s;
+    ctx.drawImage(im, (tuval.width - w) * .5, (tuval.height - h) * .49, w, h);
+    cizilen = i;
+  }
+
+  // --- zamanlama ---
+  const A = 0.22, B = 0.78;           // 0–A: AVM döngüsü · A–B: geçiş · B–1: Boğaz döngüsü
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  let hedef = 0, simdi = 0, durum = -1, aktifMetin = 0;
+
+  const ilerleme = () => { const r = dunya.getBoundingClientRect(); return clamp(-r.top / (r.height - innerHeight)); };
+
+  function oynat(i) { d.forEach((v, j) => { if (j === i) { v.play().catch(() => {}); } else v.pause(); }); }
+
+  function guncelle(p) {
+    const g = clamp((p - A) / (B - A));                  // geçiş ilerlemesi 0–1
+    const yeni = g <= 0 ? 0 : g >= 1 ? 2 : 1;            // 0: AVM döngü · 1: geçiş · 2: Boğaz döngü
+    if (yeni !== durum) {
+      if (yeni === 0) { d[0].style.opacity = 1; d[1].style.opacity = 0; tuval.style.opacity = 0; oynat(0); }
+      if (yeni === 2) { d[1].currentTime = 0; d[1].style.opacity = 1; d[0].style.opacity = 0; tuval.style.opacity = 0; oynat(1); }
+      if (yeni === 1) { tuval.style.opacity = 1; d.forEach(v => { v.pause(); v.style.opacity = 0; }); }
+      durum = yeni;
+    }
+    if (yeni === 1) {
+      const i = Math.round(ease(g) * (N - 1));
+      if (i !== cizilen) ciz(i);
+    }
+    // metin: geçişin ortasında değişir
+    const mt = g < .5 ? 0 : 1;
+    if (mt !== aktifMetin) { m[aktifMetin].classList.remove('acik'); setTimeout(() => m[mt].classList.add('acik'), 180); aktifMetin = mt; }
+    rota.forEach((li, j) => li.classList.toggle('aktif', j === mt));
+    rota[0].querySelector('b').style.setProperty('--p', clamp(p / A + g));
+    rota[1].querySelector('b').style.setProperty('--p', clamp((p - B) / (1 - B)));
+    zb.style.setProperty('--p', p.toFixed(4));
+    kaydir.style.opacity = p > .02 ? 0 : 1;
+  }
+
+  function dongu() {
+    hedef = ilerleme();
+    simdi += (hedef - simdi) * 0.1;                      // yumuşak kaydırma takibi
+    if (Math.abs(hedef - simdi) < 1e-4) simdi = hedef;
+    guncelle(simdi);
+    requestAnimationFrame(dongu);
+  }
+  d[0].addEventListener('playing', () => document.getElementById('poster').style.opacity = 0, { once: true });
+  requestAnimationFrame(dongu);
+})();
+</script>
+</body>
+</html>

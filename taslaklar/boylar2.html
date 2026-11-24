@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="tr"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · Üç boy — yeni alternatifler</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+:root{--zemin:#ECEAE6}
+body{background:var(--zemin);color:var(--ink)}
+.etiket{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:14px clamp(16px,4vw,48px);background:rgba(20,20,20,.92);color:var(--paper)}
+.etiket b{font-size:20px;letter-spacing:-.02em}
+.bolum{padding:13svh clamp(16px,5vw,72px);border-bottom:1px solid rgba(20,20,20,.1)}
+h2.b{font-size:clamp(40px,5.4vw,84px);letter-spacing:-.05em;line-height:.95;margin:0 0 12px;font-weight:700;text-align:center}
+p.alt{color:#666;font-size:20px;margin:0 0 40px;text-align:center}
+.pill{display:inline-flex;background:rgba(20,20,20,.07);border-radius:999px;padding:5px;gap:4px}
+.pill button{border:0;background:transparent;font:600 16px var(--head);padding:12px 28px;border-radius:999px;cursor:pointer;color:#555;transition:background .35s,color .35s,box-shadow .35s}
+.pill button.on{background:#fff;color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.orta{display:flex;justify-content:center}
+.sayi{font-variant-numeric:tabular-nums}
+.ozellik{display:grid;grid-template-columns:repeat(3,1fr);max-width:900px;margin:36px auto 0;text-align:center}
+.ozellik b{display:block;font-size:clamp(34px,3.6vw,56px);letter-spacing:-.04em;font-weight:650}
+.ozellik span{color:#777;font-size:15px}
+
+/* E · Plan */
+.plan{max-width:1100px;margin:36px auto 0}
+.plan svg{width:100%;height:auto;display:block;overflow:visible}
+.plan .dis{fill:#fff;stroke:var(--ink);stroke-width:7;transition:width .9s var(--ease)}
+.plan .cam{stroke:#7fa3b3;stroke-width:3;transition:x2 .9s var(--ease)}
+.plan .esya{transition:opacity .6s .25s;opacity:0}
+.plan .esya.on{opacity:1}
+.plan .esya rect,.plan .esya circle{fill:#d9d5cc;stroke:#8f8a80;stroke-width:1.5}
+.plan .kisi{fill:var(--accent)!important;stroke:none!important}
+.plan .olc{font:600 18px var(--head);fill:var(--ink)}
+.plan .olcc{stroke:var(--ink);stroke-width:1.2}
+.lejant{display:flex;justify-content:center;gap:28px;color:#666;font-size:15px;margin-top:22px}
+.lejant i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:-1px}
+.senaryo{text-align:center;font-size:24px;font-weight:600;letter-spacing:-.02em;margin-top:18px;min-height:32px}
+
+/* F · Sürgü */
+.surgu{max-width:1100px;margin:30px auto 0}
+.surgu svg{width:100%;height:auto;display:block;overflow:visible}
+.surgu .cerceve{fill:none;stroke:var(--ink);stroke-width:9}
+.surgu .camy{fill:rgba(150,185,200,.28)}
+.surgu .kayit{stroke:var(--ink);stroke-width:4}
+.surgu .zemin{stroke:rgba(20,20,20,.25);stroke-width:1.5}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(20,20,20,.15);border-radius:4px;margin:40px 0 0;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.15);cursor:grab}
+.duraklar{display:flex;justify-content:space-between;margin-top:14px;color:#777;font:600 14px var(--mono)}
+.surgu-no{text-align:center;font-size:clamp(70px,9vw,140px);letter-spacing:-.06em;font-weight:700;line-height:.9;margin-bottom:10px}
+.surgu-no small{font-size:.25em;letter-spacing:0;color:#777;font-weight:500}
+
+/* G · Tanıdık ölçek */
+.tanidik{max-width:1200px;margin:30px auto 0;position:relative}
+.tanidik svg{width:100%;height:auto;display:block;overflow:visible}
+.tanidik .kab{transition:width .9s var(--ease)}
+.tanidik .sil{fill:#a8a49b}
+.tanidik .park{fill:none;stroke:#c9a400;stroke-width:3;stroke-dasharray:10 8}
+.tanidik text{font:600 15px var(--head);fill:#555}
+.kiyas{text-align:center;font-size:clamp(24px,2.4vw,36px);font-weight:600;letter-spacing:-.03em;margin-top:26px;min-height:44px}
+.kiyas em{font-style:normal;color:#8a8780}
+</style></head><body>
+
+<!-- ============ E ============ -->
+<div class="etiket"><b>E · Plan görünümü</b><span class="mono">Üstten mimari plan; boy değişince içine sığanlar değişir</span></div>
+<section class="bolum">
+  <h2 class="b">Üç boy. Tek sistem.</h2>
+  <p class="alt">Üstten bakın: her boyda içeriye ne sığar.</p>
+  <div class="orta"><div class="pill" id="e-pill"><button>235</button><button class="on">482</button><button>616</button></div></div>
+  <div class="plan">
+    <svg viewBox="-20 -60 720 340" id="e-svg">
+      <defs><pattern id="izg" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="rgba(20,20,20,.08)" stroke-width="1"/></pattern></defs>
+      <rect x="-20" y="-20" width="720" height="290" fill="url(#izg)"/>
+      <rect class="dis" id="e-dis" x="0" y="0" width="482" height="235" rx="3"/>
+      <line class="cam" id="e-cam" x1="20" y1="235" x2="462" y2="235"/>
+      <!-- ölçü -->
+      <line class="olcc" x1="0" y1="-30" id="e-oc" x2="482" y2="-30"/><text class="olc" id="e-ot" x="241" y="-40" text-anchor="middle">482 cm</text>
+      <line class="olcc" x1="-14" y1="0" x2="-14" y2="235"/><text class="olc" x="-24" y="125" text-anchor="end">235</text>
+      <!-- 235: kahve tezgâhı -->
+      <g class="esya" data-b="0"><rect x="20" y="20" width="160" height="55" rx="4"/><rect x="20" y="75" width="55" height="90" rx="4"/><circle class="kisi" cx="120" cy="110" r="14"/><circle class="kisi" cx="150" cy="200" r="14"/></g>
+      <!-- 482: pop-up mağaza -->
+      <g class="esya on" data-b="1"><rect x="20" y="18" width="440" height="40" rx="4"/><rect x="170" y="110" width="140" height="70" rx="4"/><rect x="360" y="120" width="80" height="80" rx="4"/><circle class="kisi" cx="240" cy="85" r="14"/><circle class="kisi" cx="110" cy="150" r="14"/><circle class="kisi" cx="330" cy="205" r="14"/></g>
+      <!-- 616: satış ofisi -->
+      <g class="esya" data-b="2"><rect x="40" y="70" width="200" height="100" rx="6"/><circle cx="70" cy="55" r="14"/><circle cx="140" cy="55" r="14"/><circle cx="210" cy="55" r="14"/><circle cx="70" cy="185" r="14"/><circle cx="140" cy="185" r="14"/><circle cx="210" cy="185" r="14"/><rect x="320" y="60" width="140" height="120" rx="4"/><rect x="510" y="20" width="85" height="70" rx="4"/><circle class="kisi" cx="140" cy="120" r="12"/><circle class="kisi" cx="555" cy="120" r="14"/><circle class="kisi" cx="390" cy="205" r="14"/></g>
+    </svg>
+  </div>
+  <div class="senaryo" id="e-sen">Pop-up mağaza · raf duvarı, tezgâh, sergi masası</div>
+  <div class="lejant"><span><i></i>kişi</span><span>Kareler 50 × 50 cm</span><span>Yerleşimler örnektir</span></div>
+  <div class="ozellik"><div><b class="sayi" id="e-alan">11,3</b><span>taban alanı, m²</span></div><div><b>235</b><span>en, cm</span></div><div><b>255</b><span>yükseklik, cm</span></div></div>
+</section>
+
+<!-- ============ F ============ -->
+<div class="etiket"><b>F · Sürgü</b><span class="mono">Ziyaretçi tutamaçla kabini kendisi uzatır; bırakınca en yakın boya oturur</span></div>
+<section class="bolum">
+  <div class="surgu-no"><span class="sayi" id="f-no">482</span> <small>cm</small></div>
+  <p class="alt">Tutamacı sürükleyin. FLEXA 235, 482 ve 616 cm.</p>
+  <div class="surgu">
+    <svg viewBox="0 0 640 300" id="f-svg"><line class="zemin" x1="0" y1="280" x2="640" y2="280"/><g id="f-kab"></g></svg>
+    <input type="range" id="f-r" min="235" max="616" step="1" value="482" aria-label="Kabin uzunluğu">
+    <div class="duraklar"><span>235</span><span>482</span><span>616</span></div>
+  </div>
+</section>
+
+<!-- ============ G ============ -->
+<div class="etiket"><b>G · Tanıdık ölçek</b><span class="mono">Boyu bildik nesnelerle anlatır: insan, otomobil, otopark yeri</span></div>
+<section class="bolum">
+  <h2 class="b">Ne kadar büyük?</h2>
+  <p class="alt">Bildiğiniz şeylerle kıyaslayın.</p>
+  <div class="orta"><div class="pill" id="g-pill"><button>235</button><button class="on">482</button><button>616</button></div></div>
+  <div class="tanidik">
+    <svg viewBox="-40 -20 860 320">
+      <line x1="-40" y1="270" x2="820" y2="270" stroke="rgba(20,20,20,.25)"/>
+      <rect class="park" x="250" y="14" width="500" height="256" rx="2"/><text x="500" y="6" text-anchor="middle">otopark yeri · ~500 cm</text>
+      <!-- insan -->
+      <g class="sil" transform="translate(160 95)"><circle cx="20" cy="12" r="11"/><path d="M8 28h24l5 60-8 2-2 85h-9l-2-60-2 60H5l-2-85-8-2z"/></g>
+      <text x="180" y="292" text-anchor="middle">175 cm</text>
+      <!-- otomobil (yan siluet ~450 cm) -->
+      <text x="525" y="292" text-anchor="middle" id="g-otot">otomobil · ~450 cm</text>
+      <!-- kabin -->
+      <image class="kab" id="g-kab" href="urun/boy-482.webp" x="270" y="15" width="482" height="255" preserveAspectRatio="none"/>
+      <!-- otomobil (yan siluet ~450 cm), kabinin önünde çizgi olarak -->
+      <path id="g-oto" d="M300 270h450v-48c0-10-6-16-16-18l-70-10-58-44c-8-6-18-9-28-9H436c-12 0-23 4-32 11l-50 40-38 6c-10 2-16 8-16 18z" fill="rgba(242,179,0,.18)" stroke="#c9a400" stroke-width="3"/>
+      <circle cx="380" cy="270" r="26" fill="#ECEAE6" stroke="#c9a400" stroke-width="3"/><circle cx="670" cy="270" r="26" fill="#ECEAE6" stroke="#c9a400" stroke-width="3"/>
+    </svg>
+  </div>
+  <div class="kiyas" id="g-kiyas">482 cm · <em>bir otomobil boyu kadar.</em></div>
+</section>
+
+<script>
+(() => {
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const B = [235, 482, 616], ALAN = ['5,5', '11,3', '14,5'];
+  // ---- E: Plan ----
+  const eB = [...document.querySelectorAll('#e-pill button')], eDis = document.getElementById('e-dis'), eCam = document.getElementById('e-cam');
+  const eOc = document.getElementById('e-oc'), eOt = document.getElementById('e-ot'), eEsya = [...document.querySelectorAll('.plan .esya')];
+  const eSen = document.getElementById('e-sen'), eAlan = document.getElementById('e-alan');
+  const SEN = ['Kahve noktası · tezgâh ve bir barista', 'Pop-up mağaza · raf duvarı, tezgâh, sergi masası', 'Satış ofisi · 6 kişilik masa, maket, karşılama'];
+  let eU = 482;
+  function eSec(i) {
+    eB.forEach((b, j) => b.classList.toggle('on', j === i)); eEsya.forEach(g => g.classList.toggle('on', +g.dataset.b === i));
+    const son = B[i], bas = eU, t0 = performance.now(); eSen.textContent = SEN[i]; eAlan.textContent = ALAN[i];
+    (function an(t) { const k = clamp((t - t0) / 900), e = 1 - Math.pow(1 - k, 3), u = bas + (son - bas) * e;
+      eDis.setAttribute('width', u); eCam.setAttribute('x2', u - 20); eOc.setAttribute('x2', u); eOt.setAttribute('x', u / 2); eOt.textContent = Math.round(u) + ' cm';
+      if (k < 1) requestAnimationFrame(an); else eU = son; })(t0);
+  }
+  eB.forEach((b, i) => b.onclick = () => eSec(i));
+
+  // ---- F: Sürgü (çizgi cephe, panel sayısı boya göre) ----
+  const fR = document.getElementById('f-r'), fK = document.getElementById('f-kab'), fNo = document.getElementById('f-no');
+  const H = 255, Y = 280 - H;
+  function fCiz(u) {
+    const x0 = (640 - u) / 2; let s = `<rect class="camy" x="${x0}" y="${Y}" width="${u}" height="${H}"/>`;
+    const n = Math.max(2, Math.round(u / 95)); for (let i = 1; i < n; i++) { const x = x0 + u * i / n; s += `<line class="kayit" x1="${x}" y1="${Y}" x2="${x}" y2="${280}"/>`; }
+    s += `<rect class="cerceve" x="${x0}" y="${Y}" width="${u}" height="${H}"/><rect x="${x0}" y="${Y}" width="${u}" height="16" fill="#141414"/><rect x="${x0}" y="${280 - 14}" width="${u}" height="14" fill="#141414"/>`;
+    fK.innerHTML = s; fNo.textContent = Math.round(u);
+  }
+  let fHedef = 482, fU = 482;
+  fR.addEventListener('input', () => { fHedef = +fR.value; });
+  const otur = () => { const en = B.reduce((a, b) => Math.abs(b - fR.value) < Math.abs(a - fR.value) ? b : a); fR.value = en; fHedef = en; };
+  fR.addEventListener('change', otur); fR.addEventListener('pointerup', otur);
+  (function fLoop() { fU += (fHedef - fU) * .18; fCiz(fU); requestAnimationFrame(fLoop); })();
+
+  // ---- G: Tanıdık ölçek ----
+  const gB = [...document.querySelectorAll('#g-pill button')], gK = document.getElementById('g-kab'), gKi = document.getElementById('g-kiyas');
+  const KIY = ['235 cm · <em>bir insan boyunun yaklaşık 1,3 katı.</em>', '482 cm · <em>bir otomobil boyu kadar.</em>', '616 cm · <em>bir otopark yerinden uzun.</em>'];
+  let gU = 482;
+  function gSec(i) {
+    gB.forEach((b, j) => b.classList.toggle('on', j === i)); gKi.innerHTML = KIY[i];
+    const son = B[i], bas = gU, t0 = performance.now(); gK.setAttribute('href', `urun/boy-${son}.webp`);
+    (function an(t) { const k = clamp((t - t0) / 900), e = 1 - Math.pow(1 - k, 3), u = bas + (son - bas) * e; gK.setAttribute('width', u); if (k < 1) requestAnimationFrame(an); else gU = son; })(t0);
+  }
+  gB.forEach((b, i) => b.onclick = () => gSec(i));
+})();
+</script></body></html>

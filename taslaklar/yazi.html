@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLEXA · Dev yazı — prototip E</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+body{background:var(--paper);color:var(--ink)}
+.acilis{position:relative;height:300svh}
+.sahne{position:sticky;top:0;height:100svh;overflow:hidden;background:#000}
+/* yazı maskesi: kâğıt rengi katman, siyah yazı "screen" ile videoyu deler */
+.maske{position:absolute;inset:0;z-index:2;background:#fff;color:#000;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center;transform-origin:50% 52%;will-change:transform}
+.maske span{font-size:clamp(120px,31vw,560px);font-weight:700;letter-spacing:-.06em;line-height:.8}
+.ust{position:absolute;z-index:3;left:clamp(16px,5vw,72px);right:clamp(16px,5vw,72px);display:flex;justify-content:space-between;align-items:end;transition:opacity .4s}
+.ust.a{top:110px}
+.ust.b{bottom:clamp(24px,5svh,56px)}
+.ust h1{font-size:clamp(28px,3vw,46px);letter-spacing:-.03em;line-height:1;margin:6px 0 0;font-weight:620;max-width:20ch}
+.son{position:absolute;z-index:4;left:clamp(16px,5vw,72px);bottom:clamp(28px,6svh,64px);color:#fff;opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .9s var(--ease);text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.son.acik{opacity:1;transform:none}
+.son h2{font-size:clamp(42px,6vw,96px);line-height:.92;letter-spacing:-.045em;margin:8px 0 18px;font-weight:650}
+body{background:#fff}
+.maske span{font-weight:800}
+.maske span i{font-style:normal}
+</style></head><body>
+<header><div class="logo"><b>STAND ATELIER</b><span class="mono">Flexa modüler kabin</span></div><a class="btn btn-a" href="#">Kabinini tasarla</a></header>
+<main>
+<section class="acilis" id="acilis"><div class="sahne">
+  <video class="media" src="v/bogaz.mp4" poster="v/bogaz.jpg" muted playsinline loop autoplay></video>
+  <div class="maske" id="maske"><span>FL<i id="harf">E</i>XA</span></div>
+  <div class="ust a mono" id="ua"><span>Modüler kabin · kiralama ve satış</span><span>235 · 482 · 616</span></div>
+  <div class="ust b" id="ub"><h1>Bu hafta burada. Gelecek ay başka yerde.</h1><span class="mono">Kaydır ↓</span></div>
+  <div class="son" id="son"><span class="mono">04 · Ağustos · Boğaz kıyısı · FLEXA 482</span><h2>Akşam ışığında<br>bir vitrin.</h2><a class="btn btn-a" href="#">Bu kabini tasarla</a></div>
+</div></section>
+<section class="sonra"><span class="mono">Prototip E · Dev yazı</span><h2>Açılış: video, markanın harflerinin içinden görünür.</h2><p>Sayfa kâğıt rengi ve dev "FLEXA" yazısıyla açılır; harflerin içinde video oynar. Kaydırdıkça yazı kameraya doğru büyür, harfin içinden geçilir ve sahne tam ekrana açılır. Tek başına bir açılış (hero) olarak, A–D'den biriyle birlikte kullanılabilir.</p></section>
+</main>
+<script>
+(() => {
+  const s = document.getElementById('acilis'), m = document.getElementById('maske'), son = document.getElementById('son');
+  const ua = document.getElementById('ua'), ub = document.getElementById('ub');
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  let v = 0;
+  // büyüme merkezi: "E" harfinin dikey gövdesi (dolu alan) → büyüyünce ekranı tamamen kaplar
+  function merkez() {
+    m.style.transform = 'none';
+    const h = document.getElementById('harf').getBoundingClientRect();
+    m.style.transformOrigin = `${h.left + h.width * .14}px ${h.top + h.height * .5}px`;
+  }
+  merkez(); addEventListener('resize', merkez); document.fonts && document.fonts.ready.then(merkez);
+  (function loop() {
+    const r = s.getBoundingClientRect(), h = clamp(-r.top / (r.height - innerHeight));
+    v += (h - v) * .09;
+    const t = clamp(v / .7), e = t * t * t;
+    m.style.transform = `scale(${1 + e * 40})`;
+    m.style.opacity = t > .92 ? 1 - (t - .92) / .08 : 1;
+    ua.style.opacity = ub.style.opacity = 1 - clamp(v * 6);
+    ua.style.color = ub.style.color = '#141414';
+    son.classList.toggle('acik', v > .72);
+    requestAnimationFrame(loop);
+  })();
+})();
+</script></body></html>

@@ -1,0 +1,28 @@
+/* Yeni site ortak katmanı: Apple sadeliği */
+:root{--zemin:#ECEAE6;--cizgi:rgba(20,20,20,.14)}
+body{background:var(--zemin);color:var(--ink)}
+.ust-menu{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:12px clamp(16px,4vw,48px);background:rgba(236,234,230,.72);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid rgba(20,20,20,.06)}
+.ust-menu .logo{text-decoration:none;font-weight:700;font-size:18px;letter-spacing:.14em}
+.ust-menu nav{display:flex;gap:28px;align-items:center;font-size:14px}
+.ust-menu nav a{text-decoration:none;opacity:.8}
+.ust-menu nav a.aktif{opacity:1;font-weight:600}
+.ust-menu nav a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;min-height:44px;padding:0 22px;font-weight:600;font-size:15px;text-decoration:none;border:1.5px solid currentColor;transition:background .3s,color .3s,transform .3s}
+.btn:hover{transform:translateY(-1px)}
+.btn-a{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.btn-ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn-bos{background:transparent}
+.ust-menu .btn{min-height:38px;padding:0 18px;font-size:14px}
+.alt-bilgi{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:28px clamp(16px,5vw,72px);border-top:1px solid var(--cizgi);font-size:13px;color:#666}
+.alt-bilgi a{text-decoration:none;margin-left:20px}
+.sayfa-bas{padding:150px clamp(16px,5vw,72px) 60px;text-align:center}
+.sayfa-bas h1{font-size:clamp(56px,9vw,148px);letter-spacing:-.055em;line-height:.88;margin:0;font-weight:700}
+.sayfa-bas p{font-size:clamp(19px,1.8vw,26px);color:#555;letter-spacing:-.015em;margin:20px auto 0;max-width:40ch;line-height:1.4}
+.pill{display:inline-flex;background:rgba(20,20,20,.07);border-radius:999px;padding:5px;gap:4px}
+.pill button{border:0;background:transparent;font:600 16px var(--head);padding:12px 28px;border-radius:999px;cursor:pointer;color:#555;transition:background .35s,color .35s,box-shadow .35s}
+.pill button.on{background:#fff;color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.sayi{font-variant-numeric:tabular-nums}
+.gorun{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
+.gorun.acik{opacity:1;transform:none}
+@media (max-width:760px){.ust-menu nav a:not(.btn){display:none}}
+@media (prefers-reduced-motion:reduce){.gorun{opacity:1;transform:none;transition:none}}
